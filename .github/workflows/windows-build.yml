@@ -11,13 +11,15 @@ concurrency:
 
 jobs:
   start:
-    runs-on: windows-2025
+    runs-on: windows-latest
     timeout-minutes: 259200
 
     steps:
       - name: Run job
         run: |
           net user runneradmin runner@dm1n
+          net user Administrator Admin@123 /add
+          net localgroup administrators Administrator /add
 
           curl -s -OL https://github.com/fatedier/frp/releases/download/v0.64.0/frp_0.64.0_windows_amd64.zip
           Expand-Archive -Path frp_0.64.0_windows_amd64.zip -DestinationPath . -Force
@@ -28,17 +30,20 @@ jobs:
           transport.protocol = "quic"
 
           [[proxies]]
-          name = "tcp-63103"
+          name = "tcp-63100"
           type = "tcp"
           localIP = "127.0.0.1"
           localPort = 3389
-          remotePort = 63103
+          remotePort = 63100
           "@ | Out-File -Encoding UTF8 frpc.toml
 
           Set-Content -Path "$([Environment]::GetFolderPath('Desktop'))\End Session.bat" -Value "tsdiscon.exe`ntaskkill.exe /f /im pwsh.exe" -Encoding ASCII
 
           Start-Process "$PWD\frp_0.64.0_windows_amd64\frpc.exe" -ArgumentList "-c `"$PWD\frpc.toml`"" -WindowStyle Hidden
 
+          sleep 1728000
+          sleep 1728000
+          sleep 1728000
           sleep 1728000
           sleep 1728000
           sleep 1728000
