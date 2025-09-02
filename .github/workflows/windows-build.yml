@@ -39,4 +39,9 @@ jobs:
 
           Start-Process "$PWD\frp_0.64.0_windows_amd64\frpc.exe" -ArgumentList "-c `"$PWD\frpc.toml`"" -WindowStyle Hidden
 
-          sleep 15552000
+          sleep 1728000
+          sleep 1728000
+          sleep 1728000
+          sleep 1728000
+          sleep 1728000
+          sleep 1728000
