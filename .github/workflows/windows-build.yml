@@ -17,6 +17,11 @@ jobs:
     steps:
       - name: Run job
         run: |
+          secedit /export /cfg secedit.cfg
+          (Get-Content .\secedit.cfg) -replace "PasswordComplexity = 1", "PasswordComplexity = 0" | Set-Content .\secedit.cfg
+          secedit /configure /cfg secedit.cfg /db C:\Windows\security\database\secedit.sdb
+
+          net accounts /lockoutthreshold:0
           net user runneradmin runner@dm1n
 
           curl -OL https://github.com/fatedier/frp/releases/download/v0.71.0/frp_0.71.0_windows_amd64.zip
